@@ -959,6 +959,13 @@ impl Deserializable for Nursery {
                             result.use_await =
                                 Deserializable::deserialize(&value, "useAwait", diagnostics);
                         }
+                        "useFilenamingConvention" => {
+                            result.use_filenaming_convention = Deserializable::deserialize(
+                                &value,
+                                "useFilenamingConvention",
+                                diagnostics,
+                            );
+                        }
                         "useGroupedTypeImport" => {
                             result.use_grouped_type_import = Deserializable::deserialize(
                                 &value,
@@ -1003,6 +1010,7 @@ impl Deserializable for Nursery {
                                     "noUnusedPrivateClassMembers",
                                     "noUselessLoneBlockStatements",
                                     "useAwait",
+                                    "useFilenamingConvention",
                                     "useGroupedTypeImport",
                                     "useImportRestrictions",
                                     "useRegexLiterals",

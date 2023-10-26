@@ -818,6 +818,10 @@ export interface Nursery {
 	 */
 	useAwait?: RuleConfiguration;
 	/**
+	 * Enforce naming conventions for JavaScript and TypeScript filenames.
+	 */
+	useFilenamingConvention?: RuleConfiguration;
+	/**
 	 * Enforce the use of import type when an import only has specifiers with type qualifier.
 	 */
 	useGroupedTypeImport?: RuleConfiguration;
@@ -1257,6 +1261,7 @@ export interface RuleWithOptions {
 }
 export type PossibleOptions =
 	| ComplexityOptions
+	| FilenamingConventionOptions
 	| HooksOptions
 	| NamingConventionOptions
 	| RestrictedGlobalsOptions
@@ -1269,6 +1274,19 @@ export interface ComplexityOptions {
 	 * The maximum complexity score that we allow. Anything higher is considered excessive.
 	 */
 	maxAllowedComplexity: number;
+}
+/**
+ * Rule's options.
+ */
+export interface FilenamingConventionOptions {
+	/**
+	 * Allowed cases for _TypeScript_ `enum` member names.
+	 */
+	filenameCases: FilenameCases;
+	/**
+	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
+	 */
+	strictCase: boolean;
 }
 /**
  * Options for the rule `useExhaustiveDependencies` and `useHookAtTopLevel`
@@ -1305,6 +1323,7 @@ export interface ValidAriaRoleOptions {
 	allowedInvalidRoles: string[];
 	ignoreNonDom: boolean;
 }
+export type FilenameCases = FilenameCase[];
 export interface Hooks {
 	/**
 	* The "position" of the closure function, starting from zero.
@@ -1325,6 +1344,10 @@ export interface Hooks {
  * Supported cases for TypeScript `enum` member names.
  */
 export type EnumMemberCase = "PascalCase" | "CONSTANT_CASE" | "camelCase";
+/**
+ * Supported cases for TypeScript `enum` member names.
+ */
+export type FilenameCase = "camelCase" | "export" | "kebab-case" | "snake_case";
 export interface ProjectFeaturesParams {
 	manifest_path: RomePath;
 }
@@ -1507,6 +1530,7 @@ export type Category =
 	| "lint/nursery/noUselessLoneBlockStatements"
 	| "lint/nursery/useAwait"
 	| "lint/nursery/useBiomeSuppressionComment"
+	| "lint/nursery/useFilenamingConvention"
 	| "lint/nursery/useGroupedTypeImport"
 	| "lint/nursery/useImportRestrictions"
 	| "lint/nursery/useRegexLiterals"

@@ -211,18 +211,19 @@ In Biome, the parsing errors result in `Bogus` nodes, which may contain any numb
 When formatting, Biome treats bogus nodes as effectively plain text, printing them out verbatim into the resulting code without any formatting since attempting to format them could be incorrect and cause semantic changes.
 
 For class properties, Prettier's current parsing strategy also uses boolean fields for modifiers, meaning only one of each kind of modifier can ever be present (accessibility modifiers are stored as a single string).
-When printing, Prettier just looks at the list of booleans and decides which modifiers to print out again. Biome instead keeps a list of modifiers, meaning duplicates are kept around and able to be analyzed (hence the parsing error messages about duplicate modifiers and ordering).
-When printing out the bogus nodes, this list is still kept intact, and printing out the unformatted text results in those modifiers continuing to exist.
+When printing, Prettier looks at the list of booleans and decides which modifiers to print out again. Biome instead keeps a list of modifiers, meaning duplicates are kept around and can be analyzed (hence the parsing error messages about duplicate modifiers and ordering).
+When printing out the bogus nodes, this list is kept intact, and printing out the unformatted text results in those modifiers continuing to exist.
 
 There are ways that Biome can address this.
 One possibility is to try to interpret the Bogus nodes when formatting and construct valid nodes out of them.
-If a valid node can be built, then it would just format that node like normal, otherwise it prints the bogus text verbatim as it does currently.
-However, this is messy and introduces a form of parsing logic into the formatter that is really not meaningful.
+If a valid node can be built, then it would just format that node like normal, otherwise, it prints the bogus text verbatim as it does currently.
+However, this is messy and introduces a form of parsing logic into the formatter that is not meaningful.
 
-Another option instead is to introduce some form of "syntactically-valid bogus node" into the parser, which accepts these kinds of errors that are purely semantic (duplicate modifiers, abstract properties in non-abstract classes).
-It would continue to build the nodes like normal (effectively matching the behavior in Prettier), but store them inside of a the new kind of bogus node, including the diagnostics along with it.
-When formatting, these special bogus nodes would just attempt to format the inner node, and then fallback if there's an error (the existing `format_or_verbatim` utility would do this already).
-This keeps the parsing and formatting logic separate from each other, but introduce more complexity to the parser, allowing invalid states to be considered semi-valid.
+Another option is to introduce some form of "syntactically-valid bogus node" into the parser, which accepts these kinds of purely semantic errors (duplicate modifiers, abstract properties in non-abstract classes).
+
+It would continue to build the nodes like normal (effectively matching the behavior in Prettier) but store them inside of a new kind of bogus node, including the diagnostics along with it.
+When formatting, these particular bogus nodes would just attempt to format the inner node and then fallback if there's an error (the existing `format_or_verbatim` utility would do this already).
+This keeps the parsing and formatting logic separate from each other but introduces more complexity to the parser, allowing invalid states to be considered semi-valid.
 
 #### Duplicate modifiers on class properties
 

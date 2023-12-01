@@ -98,12 +98,12 @@ There are some divergences with Prettier.
 Prettier and Biome unquote object and class properties that are valid JavaScript identifiers.
 Prettier [unquotes only valid ES5 identifiers](https://github.com/prettier/prettier/blob/a5d502513e5de4819a41fd90b9be7247146effc7/src/language-js/utils/index.js#L646).
 
-In an ecosystem where ES2015 is now widespread, this seems to be a legacy restriction.
-Thus, we decided to diverge here by unquoting all valid JavaScript identifiers in ES2015+.
+This is a legacy restriction in an ecosystem where ES2015 is now widespread.
+Thus, we decided to diverge here by un-quoting all valid JavaScript identifiers in ES2015+.
 
 A possible workaround would be to introduce a configuration to set the ECMAScript version a project uses.
-We could then adjust the unquoting behaviour based on that version.
-Setting the ECMAScript version to `ES5` could match the behaviour of Prettier.
+We could then adjust the un-quoting behaviour based on that version.
+Setting the ECMAScript version to `ES5` could match Prettier's behaviour.
 
 ```js title="example.js"
 const obj = {

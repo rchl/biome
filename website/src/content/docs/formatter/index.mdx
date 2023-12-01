@@ -127,10 +127,10 @@ const obj = {
 
 ### Prettier has an inconsistent behavior for assignment in computed keys.
 
-Prettier and Biome enclose some assignment expressions between parentheses, in particular in conditionals.
-This allows to identify potentially an expression that should be a comparison.
+Prettier and Biome enclose some assignment expressions between parentheses, particularly in conditionals.
+This allows Biome to identify an expression that should be a comparison.
 
-Prettier has an inconsistent behavior, because it adds parentheses for an assignment in a computed key of an object property and doesn't for a computed key of a class property, as demonstrated by the following example:
+Prettier has inconsistent behaviour because it adds parentheses for an assignment in a computed key of an object property and doesn't for a computed key of a class property, as demonstrated by the following example:
 
 Input
 

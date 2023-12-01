@@ -205,10 +205,10 @@ It correctly identifies the following syntax errors:
 - etc.
 
 In Prettier, these errors aren't considered parse errors, and the AST is still built "correctly" with the appropriate nodes.
-When formatting, Prettier then just treats these nodes as normal and formats them accordingly.
+When formatting, Prettier treats these nodes as normal and formats them accordingly.
 
-In Biome, the parsing errors result in `Bogus` nodes, which may contain any number of valid nodes, invalid nodes, and/or raw tokens.
-When formatting, Biome treats bogus nodes as effectively plain text, printing them out verbatim into the resulting code without any formatting, since attempting to format could be incorrect and cause semantic changes.
+In Biome, the parsing errors result in `Bogus` nodes, which may contain any number of valid nodes, invalid nodes, and/or raw characters.
+When formatting, Biome treats bogus nodes as effectively plain text, printing them out verbatim into the resulting code without any formatting since attempting to format them could be incorrect and cause semantic changes.
 
 For class properties, Prettier's current parsing strategy also uses boolean fields for modifiers, meaning only one of each kind of modifier can ever be present (accessibility modifiers are stored as a single string).
 When printing, Prettier just looks at the list of booleans and decides which modifiers to print out again. Biome instead keeps a list of modifiers, meaning duplicates are kept around and able to be analyzed (hence the parsing error messages about duplicate modifiers and ordering).

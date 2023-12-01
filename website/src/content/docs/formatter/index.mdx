@@ -187,7 +187,7 @@ Diff
 
 As mentioned in a previous divergence, Prettier's Babel-based parsing for JS/TS is very loose and allows multiple errors to be ignored.
 Biome's parser intentionally has stricter rules than Prettier and correctly rejects an assignment to an optional chain.
-Biome represents this invalid assignment using a bogus node and don't try to format the assignment.
+Biome represents this invalid assignment using a bogus node, and don't try to format the assignment.
 
 ### Prettier formats invalid syntaxes
 
